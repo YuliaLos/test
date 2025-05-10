@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Тест з ASP.NET</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Тест з ASP.NET</h2>
+    <form id="quiz-form">
+      <!-- Questions will be generated here -->
+    </form>
+    <button onclick="submitQuiz()">Завершити тест</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "1. Що таке ASP.NET?",
+        options: [
+          "Операційна система",
+          "Фреймворк для розробки веб-застосунків від Microsoft",
+          "Мова програмування",
+          "Браузер"
+        ],
+        answer: 1
+      },
+      {
+        question: "2. Якою мовою програмування зазвичай використовують ASP.NET?",
+        options: [
+          "Python",
+          "Java",
+          "C#",
+          "PHP"
+        ],
+        answer: 2
+      },
+      {
+        question: "3. Який компонент відповідає за обробку запитів у ASP.NET MVC?",
+        options: [
+          "View",
+          "Model",
+          "Controller",
+          "Static Files"
+        ],
+        answer: 2
+      },
+      {
+        question: "4. Який шаблон проєктування лежить в основі ASP.NET MVC?",
+        options: [
+          "Singleton",
+          "MVC",
+          "Factory",
+          "Observer"
+        ],
+        answer: 1
+      },
+      {
+        question: "5. Що таке Razor у контексті ASP.NET?",
+        options: [
+          "Новий браузер",
+          "Інструмент для тестування",
+          "Синтаксис для вставки C# у HTML",
+          "Бібліотека стилів"
+        ],
+        answer: 2
+      },
+      {
+        question: "6. Яке розширення має сторінка Razor?",
+        options: [
+          ".razor",
+          ".html",
+          ".aspx",
+          ".cs"
+        ],
+        answer: 0
+      },
+      {
+        question: "7. Який метод використовується для перенаправлення у контролері?",
+        options: [
+          "RedirectToAction()",
+          "SendTo()",
+          "Navigate()",
+          "Goto()"
+        ],
+        answer: 0
+      },
+      {
+        question: "8. Який шаблон відповідає за представлення даних користувачу?",
+        options: [
+          "Controller",
+          "Database",
+          "View",
+          "Model"
+        ],
+        answer: 2
+      },
+      {
+        question: "9. Який з нижчих варіантів є серверною технологією?",
+        options: [
+          "React",
+          "ASP.NET",
+          "HTML",
+          "CSS"
+        ],
+        answer: 1
+      },
+      {
+        question: "10. Що таке Blazor у контексті ASP.NET?",
+        options: [
+          "Інструмент компіляції",
+          "Фреймворк для створення SPA з використанням C#",
+          "СУБД",
+          "Бібліотека JavaScript"
+        ],
+        answer: 1
+      }
+    ];
+
+    const form = document.getElementById('quiz-form');
+
+    questions.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<p>${q.question}</p>`;
+      const answersDiv = document.createElement('div');
+      answersDiv.className = 'answers';
+      q.options.forEach((option, j) => {
+        answersDiv.innerHTML += `
+          <label>
+            <input type="radio" name="question${i}" value="${j}" required />
+            ${option}
+          </label>`;
+      });
+      div.appendChild(answersDiv);
+      form.appendChild(div);
+    });
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="question${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.answer) {
+          score++;
+        }
+      });
+      document.getElementById('result').innerText = `Ви дали ${score} правильних відповідей з ${questions.length}.`;
+    }
+  </script>
+</body>
+</html>
